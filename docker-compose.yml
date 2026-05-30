@@ -1,0 +1,25 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: trade-hub-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: trade_hub
+      MYSQL_USER: trade
+      MYSQL_PASSWORD: trade_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - trade_hub_mysql:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+
+  redis:
+    image: redis:7-alpine
+    container_name: trade-hub-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+volumes:
+  trade_hub_mysql:
