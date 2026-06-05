@@ -2,3 +2,7 @@
 *.exe
 bin/
 vendor/
+daily-plans/
+go-play/
+docs/
+go-learning-plan.md

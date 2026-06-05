@@ -45,6 +45,7 @@ func (s *DexService) RecordSwap(userID uint, in CreateSwapInput) (*model.DexSwap
 		AmountOut:      in.AmountOut,
 		Status:         in.Status,
 	}
+	// 入库，调用repo里的CreateSwap方法
 	if err := s.dex.CreateSwap(swap); err != nil {
 		if strings.Contains(strings.ToLower(err.Error()), "duplicate") {
 			return nil, ErrDuplicateSwap
@@ -61,10 +62,13 @@ func (s *DexService) ListSwaps(userID uint, page, pageSize int) ([]model.DexSwap
 	if pageSize < 1 || pageSize > 100 {
 		pageSize = 20
 	}
+	// 又去调用repo层里的ListSwaps方法
 	return s.dex.ListSwaps(userID, page, pageSize)
 }
 
 func (s *DexService) ListPools() ([]model.DexPool, error) {
+	// 去调用repo层里的ListPools方法
+	// 得到一个pool列表 []model.DexPool
 	return s.dex.ListPools()
 }
 

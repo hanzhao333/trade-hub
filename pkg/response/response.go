@@ -24,6 +24,7 @@ func BadRequest(c *gin.Context, msg string) {
 	Fail(c, http.StatusBadRequest, 400, msg)
 }
 
+// 那边传了c和msg过来，这边的401以及错误状态，是我们自己定义的
 func Unauthorized(c *gin.Context, msg string) {
 	Fail(c, http.StatusUnauthorized, 401, msg)
 }

@@ -20,11 +20,14 @@ func (r *DexRepo) CreateSwap(s *model.DexSwap) error {
 func (r *DexRepo) ListSwaps(userID uint, page, pageSize int) ([]model.DexSwap, int64, error) {
 	var list []model.DexSwap
 	var total int64
+	// r.db.Model(&model.DexSwap{}) // 查哪张表
+	// 查user_id = userID的记录
 	q := r.db.Model(&model.DexSwap{}).Where("user_id = ?", userID)
 	if err := q.Count(&total).Error; err != nil {
 		return nil, 0, err
 	}
 	offset := (page - 1) * pageSize
+	// 排序，按id降序，分页查询
 	err := q.Order("id desc").Offset(offset).Limit(pageSize).Find(&list).Error
 	return list, total, err
 }
